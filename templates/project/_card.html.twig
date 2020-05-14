@@ -1,0 +1,37 @@
+
+	<div class="card">
+		<img src="{{ asset('uploads/projects/' ~ project.picture) }}" class="card-img-top" alt="{{project.title}}">
+		<div class="card-body">
+			<h5 class="card-title">{{project.title}}</h5>
+			<p class="card-text">{{project.excerpt}}</p>
+			<a href="{{ path('project_show',{"id": project.id}) }}" class="btn btn-primary">
+				<i class="fa fa-eye"></i>
+				Voir plus
+			</a>
+		</div>
+		<div class="card-footer">
+
+			{% for category in project.categories %}
+				<span class="badge badge-pill badge-primary" title="Catégorie">
+                    <i class="fa fa-tag"></i>
+					{{ category.label }}
+                </span>
+			{% endfor %}
+
+			<span class="badge badge-pill badge-secondary" title="Ville">
+                    <i class="fa fa-map-marker"></i>
+					{{ project.city.name }}
+            </span>
+
+			<span class="badge badge-pill badge-info" title="Date de proposition">
+                    <i class="fa fa-calendar"></i>
+					{{ project.createdAt| date('d-m-Y')}}
+            </span>
+
+			<span class="badge badge-pill badge-warning" title="Coût du projet">
+                        <i class="fa fa-euro"></i>
+                        3000
+            </span>
+
+		</div>
+	</div>

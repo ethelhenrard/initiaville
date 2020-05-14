@@ -2,25 +2,35 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}InitiaVille{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
+
+        {% block header %}{% endblock %}
+
+    <main class="main-content container">
         {% block body %}{% endblock %}
-        {% block footer %}
-        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">InitiaVille {{ 'now'|date('Y') }}</span>
+        </div>
+    </footer>
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
 
     </body>
 
+
+
 </html>
 
 
 
-<script src="bundle.js"></script>
-</body>
-</html>

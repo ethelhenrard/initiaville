@@ -47,6 +47,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $cine->addCategory($this->getReference("cat-loisir"));
         $cine->setUser($this->getReference("user-jdupont"));
         $cine->setCost("25000");
+        $manager->persist($cine);
         $this->addReference("pj-cine", $cine);
 
 

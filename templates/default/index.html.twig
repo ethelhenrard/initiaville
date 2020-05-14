@@ -5,64 +5,12 @@
     - Accueil
 {% endblock %}
 
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
+
 {% block body %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#">InitiaVille</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
-                            <i class="fa fa-home"></i>
-                            Accueil
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-tag"></i>
-                            Catégories
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="category.html">Ecologie</a>
-                            <a class="dropdown-item" href="category.html">Loisir</a>
-                            <a class="dropdown-item" href="category.html">Santé</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cities.html">
-                            <i class="fa fa-map-marker"></i>
-                            Les Villes
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            Profil
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profile.html">
-                                <i class="fa fa-user"></i>
-                                Mon Compte
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fa fa-sign-out"></i>
-                                Déconnexion
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <main class="main-content container">
 
         <div class="jumbotron">
             <h1 class="display-4">InitiaVille</h1>
@@ -78,116 +26,14 @@
         </div>
 
         <h2>Les derniers projets</h2>
-
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-                <div class="card">
-                    <img src="uploads/projects/boite-a-lire.jpg" class="card-img-top" alt="Boîte à lire">
-                    <div class="card-body">
-                        <h5 class="card-title">Boîte à lire</h5>
-                        <p class="card-text">Permettre l'échange de livre entre particuliers.</p>
-                        <a href="project.html" class="btn btn-primary">
-                            <i class="fa fa-eye"></i>
-                            Voir plus
-                        </a>
-                    </div>
-                    <div class="card-footer">
-                    <span class="badge badge-pill badge-primary" title="Catégorie">
-                        <i class="fa fa-tag"></i>
-                        Loisir
-                    </span>
-                        <span class="badge badge-pill badge-secondary" title="Ville">
-                        <i class="fa fa-map-marker"></i>
-                        Rennes
-                    </span>
-                        <span class="badge badge-pill badge-info" title="Date de proposition">
-                        <i class="fa fa-calendar"></i>
-                        02/05/2020
-                    </span>
-                        <span class="badge badge-pill badge-warning" title="Coût du projet">
-                        <i class="fa fa-euro"></i>
-                        3000
-                    </span>
-                    </div>
+            <div class="row row-cols-1 row-cols-md-3">
+            {% for project in projects %}
+                <div class="col mb-4">
+                {% include 'project/_card.html.twig' with {'project': project} only %}
                 </div>
+            {% endfor %}
             </div>
-            <div class="col mb-4">
-                <div class="card">
-                    <img src="uploads/projects/potager-toit.jpg" class="card-img-top" alt="Potager sur les toits">
-                    <div class="card-body">
-                        <h5 class="card-title">Potager sur les toits</h5>
-                        <p class="card-text">Aménager des potagers sur les toits de la ville.</p>
-                        <a href="project.html" class="btn btn-primary">
-                            <i class="fa fa-eye"></i>
-                            Voir plus
-                        </a>
-                    </div>
-                    <div class="card-footer">
-                    <span class="badge badge-pill badge-primary" title="Catégorie">
-                        <i class="fa fa-tag"></i>
-                        Ecologie
-                    </span>
-                        <span class="badge badge-pill badge-secondary" title="Ville">
-                        <i class="fa fa-map-marker"></i>
-                        Rennes
-                    </span>
-                        <span class="badge badge-pill badge-info" title="Date de proposition">
-                        <i class="fa fa-calendar"></i>
-                        20/04/2020
-                    </span>
-                        <span class="badge badge-pill badge-warning" title="Coût du projet">
-                        <i class="fa fa-euro"></i>
-                        75 000
-                    </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                    <img src="uploads/projects/cinema-plein-air.jpg" class="card-img-top" alt="Cinéma en plein air">
-                    <div class="card-body">
-                        <h5 class="card-title">Cinéma en plein air</h5>
-                        <p class="card-text">Proposer des séances de cinéma en plein 2 soirs par semaine.</p>
-                        <a href="project.html" class="btn btn-primary">
-                            <i class="fa fa-eye"></i>
-                            Voir plus
-                        </a>
-                    </div>
-                    <div class="card-footer">
-                    <span class="badge badge-pill badge-primary" title="Catégorie">
-                        <i class="fa fa-tag"></i>
-                        Loisir
-                    </span>
-                        <span class="badge badge-pill badge-secondary" title="Ville">
-                        <i class="fa fa-map-marker"></i>
-                        St Malo
-                    </span>
-                        <span class="badge badge-pill badge-info" title="Date de proposition">
-                        <i class="fa fa-calendar"></i>
-                        19/04/2020
-                    </span>
-                        <span class="badge badge-pill badge-warning" title="Coût du projet">
-                        <i class="fa fa-euro"></i>
-                        25 000
-                    </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-
-{% block footer %}
-    <footer class="footer">
-        <div class="container">
-            <span class="text-muted">InitiaVille {{ 'now'|date('Y') }}</span>
-        </div>
-    </footer>
-{% endblock %}
 
 {% endblock %}
 
 
-
-{#<script src="bundle.js"></script>#}
