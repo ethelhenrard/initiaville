@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProjectController extends AbstractController
 {
+    //todo: faire la page d'index projets + show projet
     /**
      * @Route("/", name="project_index", methods={"GET"})
      */
@@ -24,21 +28,37 @@ class ProjectController extends AbstractController
             'projects' => $projectRepository->findAll(),
         ]);
     }
+     // il faut etre loggé pour pouvoir rajouter un projet
 
     /**
      * @Route("/new", name="project_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $pictureFile */
+            $pictureFile = $form['pictureFile']->getData();
+            //todo: attention 2 dossiers selon les images > voir quand creation novuelle ville si creation d'un 2eme service ou if
+            if ($pictureFile) {
+                $pictureFilename = $fileUploader->upload($pictureFile);
+                $project->setPicture($pictureFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
+            $project->setUser($this->getUser()); // recupere le user qui a submit le nouveau projet
             $entityManager->persist($project);
             $entityManager->flush();
 
+            $this->addFlash('success', "Bravo! Vous avez proposé un nouveau projet!");
+            //TODO redirection vers page compte User apres validation du formulaire
             return $this->redirectToRoute('project_index');
         }
 
@@ -60,6 +80,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Project $project): Response
     {
@@ -80,6 +101,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}", name="project_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Project $project): Response
     {

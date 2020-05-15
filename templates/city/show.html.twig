@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }} - Projets {{ city.name }}{% endblock %}
+
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
+
+{% block body %}
+    <h2>
+    {% if ((city.projects|length) == 0) %}
+        Pas de projet en cours
+    {% elseif (( city.projects|length) ==1) %}
+        Projet
+    {% else %}
+        Projets
+    {% endif %}
+        dans la ville de {{ city.name}}
+    </h2>
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for project in city.projects %}
+            <div class="col mb-4">
+                {% include 'project/_card.html.twig' with {'project': project} only %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

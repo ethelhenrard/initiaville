@@ -8,14 +8,16 @@
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.html">
+					<a class="nav-link" href="{{ path('homepage') }}">
 						<i class="fa fa-home"></i>
 						Accueil
 					</a>
 				</li>
+				{#rendre accessible les variables du DefaultControl dans autres controllers pour avoir liste categories partout#}
 				{{ render(controller('App\\Controller\\DefaultController::searchFor')) }}
+
 				<li class="nav-item">
-					<a class="nav-link" href="cities.html">
+					<a class="nav-link" href="{{path('city_index')}}">
 						<i class="fa fa-map-marker"></i>
 						Les Villes
 					</a>
@@ -23,23 +25,44 @@
 			</ul>
 
 			<ul class="navbar-nav">
+				{% if app.user %}
+
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fa fa-user"></i>
 						Profil
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="profile.html">
+						<a class="dropdown-item" href="{{path('user_show', {"id": app.user.id}) }}">
 							<i class="fa fa-user"></i>
 							Mon Compte
 						</a>
-						<a class="dropdown-item" href="#">
+						<a class="dropdown-item" href="{{ path('project_new') }}">
+							<i class="fa fa-plus-circle"></i>
+							Créer un nouveau projet
+						</a>
+						<a class="dropdown-item" href="{{ path('app_logout') }}">
 							<i class="fa fa-sign-out"></i>
 							Déconnexion
 						</a>
 					</div>
 				</li>
+				{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('app_register')}}">
+						<i class="fa fa-user-plus"></i>
+						Créer un compte
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('app_login')}}">
+						<i class="fa fa-user"></i>
+						Log In
+					</a>
+				</li>
+				{% endif %}
 			</ul>
+
 		</div>
 	</div>
 </nav>

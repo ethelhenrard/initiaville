@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }} - Liste des villes {% endblock %}
+
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des villes participantes</h1>
+
+    <div class="row row-cols-1 row-cols-md-4">
+        {% for city in cities %}
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{asset('uploads/cities/' ~ city.picture) }}" class="card-img-top" alt="{{city.name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{city.name}}</h5>
+                        <a href="{{path('city_show', {"id": city.id})}}" class="btn btn-primary">
+                            <i class="fa fa-eye"></i>
+                            {% if ((city.projects|length) == 1) %}
+                            Voir le projet
+                        {% elseif ((city.projects|length) ==0) %}
+                            Pas de projet
+                        {% else %}
+                            Voir les projets
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                    <span class="badge badge-pill badge-primary" title="Projets">
+                        <i class="fa fa-lightbulb-o"></i>
+                        {{city.projects|length}}
+                        {% if ((city.projects|length) > 1) %}
+                            projets
+                        {% else %}
+                            projet
+                        {% endif %}
+                    </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

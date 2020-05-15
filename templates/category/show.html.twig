@@ -1,26 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %} {{ parent () }} - Projets {{ category.label }}{% endblock %}
+
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ category.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ category.label }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h2>
+        {% if ((category.projects|length) == 0) %}
+            Pas de projet en cours
+        {% elseif (( category.projects|length) ==1) %}
+            Projet
+        {% else %}
+            Projets
+        {% endif %}
+            dans la catégorie {{ category.label }}
+    </h2>
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for project in category.projects %}
+            <div class="col mb-4">
+            {% include 'project/_card.html.twig' with {'project': project} only %}
+            </div>
+        {% endfor %}
+    </div>
 
-    <a href="{{ path('category_index') }}">back to list</a>
-
-    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-
-    {{ include('category/_delete_form.html.twig') }}
 {% endblock %}

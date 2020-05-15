@@ -14,14 +14,15 @@
 			{% for category in project.categories %}
 				<span class="badge badge-pill badge-primary" title="Catégorie">
                     <i class="fa fa-tag"></i>
-					{{ category.label }}
+					<a style="color: white" href="{{ path('category_show', {"id": category.id}) }}">{{ category.label }}</a>
                 </span>
 			{% endfor %}
 
-			<span class="badge badge-pill badge-secondary" title="Ville">
+				<span class="badge badge-pill badge-secondary" title="Ville">
                     <i class="fa fa-map-marker"></i>
-					{{ project.city.name }}
+					<a style="color: white" href="{{ path('city_show', {"id": project.city.id}) }}">{{project.city.name}}</a>
             </span>
+
 
 			<span class="badge badge-pill badge-info" title="Date de proposition">
                     <i class="fa fa-calendar"></i>
