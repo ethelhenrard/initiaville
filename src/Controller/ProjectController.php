@@ -33,9 +33,6 @@ class ProjectController extends AbstractController
     /**
      * @Route("/new", name="project_new", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
-     * @param Request $request
-     * @param FileUploader $fileUploader
-     * @return Response
      */
     public function new(Request $request, FileUploader $fileUploader): Response
     {
@@ -59,7 +56,7 @@ class ProjectController extends AbstractController
 
             $this->addFlash('success', "Bravo! Vous avez proposé un nouveau projet!");
             //TODO redirection vers page compte User apres validation du formulaire
-            return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('user_show', ["id" => $this->getUser()->getId()]);
         }
 
         return $this->render('project/new.html.twig', [
@@ -90,7 +87,7 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('user_show', ["id" => $this->getUser()->getId()]);
         }
 
         return $this->render('project/edit.html.twig', [
@@ -111,6 +108,6 @@ class ProjectController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('project_index');
+        return $this->redirectToRoute('user_show', ["id" => $this->getUser()->getId()]);
     }
 }

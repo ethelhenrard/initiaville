@@ -1,46 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent () }} - Project{% endblock %}
+{% block title %} {{ parent () }} - {{ project.title }}{% endblock %}
 
 {% block body %}
-    <h1>Project</h1>
+    <<div class="row">
+    <div class="col-md-4">
+        <img src="{{asset('uploads/projects/' ~ project.picture)}}" alt="{{project.title}}" class="img-fluid">
+    </div>
+    <div class="col-md-8">
+        <h1>{{project.title}}</h1>
+        <div class="bg-light rounded p-2">
+        {% for category in project.categories %}
+            <span class="badge badge-pill badge-primary" title="Catégorie">
+                    <i class="fa fa-tag"></i>
+                    {{category.label}}
+            </span>
+        {% endfor %}
+            <span class="badge badge-pill badge-secondary" title="Ville">
+                    <i class="fa fa-map-marker"></i>
+                    {{project.city.name}}
+                </span>
+            <span class="badge badge-pill badge-info" title="Date de proposition">
+                    <i class="fa fa-calendar"></i>
+                   {{project.createdAt|date('d-m-Y')}}
+                </span>
+            <span class="badge badge-pill badge-warning" title="Coût du projet">
+                    <i class="fa fa-euro"></i>
+                    {{project.cost}}
+                </span>
+        </div>
+        <p>{{ project.description }}</p>
+    </div>
+</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ project.title }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ project.picture }}</td>
-            </tr>
-            <tr>
-                <th>Cost</th>
-                <td>{{ project.cost }}</td>
-            </tr>
-            <tr>
-                <th>Excerpt</th>
-                <td>{{ project.excerpt }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ project.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ project.createdAt ? project.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <hr>
 
-    <a href="{{ path('project_index') }}">back to list</a>
+    <form class="bg-light rounded p-2">
+        <h2>Ajouter un commentaire</h2>
+        <div class="form-group">
+            <label for="input-title">Titre</label>
+            <input type="text" class="form-control" id="input-title" placeholder="Titre">
+        </div>
+        <div class="form-group">
+            <label for="texatrea-comment">Contenu</label>
+            <textarea class="form-control" id="texatrea-comment" placeholder="Contenu de votre message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
 
-    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
-
-    {{ include('project/_delete_form.html.twig') }}
+    <section class="list-group mt-4">
+        <article class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">C'est une super idée !</h5>
+                <small>Il y a 2 heures</small>
+            </div>
+            <p class="mb-1"></p>
+            <small>J'aimerai vraiment pouvoir participer avec vous à ce projet.</small>
+        </article>
+    </section>
 {% endblock %}

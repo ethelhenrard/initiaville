@@ -11,5 +11,5 @@
 
     {{ include('project/_form.html.twig') }}
 
-    <a href="{{ path('user_show', {"id": app.user}) }}">Retour sur votre compte</a>
+    <a href="{{ path('user_show', {'id': app.user.id}) }}">Retour sur votre compte</a>
 {% endblock %}
