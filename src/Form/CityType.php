@@ -14,7 +14,10 @@ class CityType extends AbstractType
         $builder
             ->add('name')
             ->add('picture')
-        ;
+            ->add('pictureFile', FileType::class,[
+                'label' => "Télécharger une photo",
+                'mapped' => false
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

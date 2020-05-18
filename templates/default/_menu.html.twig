@@ -35,9 +35,9 @@
 
 					{% if is_granted('ROLE_ADMIN') %}
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="{{path('user_show', {"id": app.user.id}) }}">
+						<a class="dropdown-item" href="{{path('easyadmin')}}">
 							<i class="fa fa-user"></i>
-							Easyadmin
+							Administration
 						</a>
 						<a class="dropdown-item" href="{{ path('app_logout') }}">
 							<i class="fa fa-sign-out"></i>

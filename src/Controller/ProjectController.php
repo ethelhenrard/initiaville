@@ -43,11 +43,16 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form['pictureFile']->getData();
+
+            //$destination =$this->getParameter('uploads_directory').'/projects/';
+
             //todo: attention 2 dossiers selon les images > voir quand creation novuelle ville si creation d'un 2eme service ou if
             if ($pictureFile) {
                 $pictureFilename = $fileUploader->upload($pictureFile);
                 $project->setPicture($pictureFilename);
             }
+
+            //$pictureFile->move($destination, $pictureFile);
 
             $entityManager = $this->getDoctrine()->getManager();
             $project->setUser($this->getUser()); // recupere le user qui a submit le nouveau projet

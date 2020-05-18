@@ -43,9 +43,10 @@
                 <i class="fa fa-pencil"></i>
                 Modifier
             </a>
-            <a href="{{ path('project_delete', {'id': project.id}) }}" class="btn btn-danger">
-                <i class="fa fa-trash"></i>
-                Supprimer
+            {#todo - demander à Pierre pourquoi ca ne marche pas#}
+            {#<a href="{{ path('project_delete', {'id': project.id}) }}" class="btn btn-danger" onsubmit="return confirm('Etes vous sûr de vouloir supprimer ce projet?');">            {#<a href="{{ path('project_delete', {'id': project.id}) }}" class="btn btn-danger" onsubmit="return confirm('Etes vous sûr de vouloir supprimer ce projet?');">#}
+              {% include '/project/_delete_form.html.twig' %}
+                {#<i class="fa fa-trash"></i>#}
             </a>
             {% endfor %}
                 </div>

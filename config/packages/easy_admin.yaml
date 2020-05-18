@@ -1,6 +1,77 @@
 easy_admin:
+
+    list:
+        title: 'Liste des %%entity_label%%'
+        actions : ['show']
+    show:
+        title: '%%entity_label%% (#%%entity_id%%)'
+
     entities:
         # List the entity class name you want to manage
-        - App\Entity\Product
-        - App\Entity\Category
-        - App\Entity\User
+
+        Category:
+            class: App\Entity\Category
+            label : 'Catégories'
+
+            list:
+                actions: ['-show']
+                fields :
+                    - {property: 'label', label : 'Nom'}
+                    - {property: 'projects', label : 'Nombre de projets'}
+            form:
+                fields:
+                    - 'label'
+            edit:
+                fields:
+                    - 'label'
+
+        Project:
+            class: App\Entity\Project
+            label : 'Projets'
+            image_base_path: '%uploads_url%/projects'
+
+            list:
+                sort: ['cost', 'ASC']
+                fields:
+                    - {property: 'title', label: 'Projet'}
+                    - {property: 'picture', type: 'image', label: 'Photo'}
+                    - {property: 'user', label : 'Créé par'}
+                    - {property: 'createdAt', format: 'j/n/Y', label: 'Date de création'}
+                    - {property: 'cost', label: 'Coût', format: '%d€'}
+                    - {property: 'city', label: 'Ville'}
+            form:
+                fields:
+                    - 'title'
+                    - 'excerpt'
+                    - 'description'
+                    - 'cost'
+                    - 'city'
+                    - 'categories'
+                    - { property: 'picture', label: 'Image', type: 'file_upload', type_options: { upload_dir: '%uploads_directory%', download_path: '%uploads_url%' } }
+
+        City:
+            class: App\Entity\City
+            label: 'Villes'
+            image_base_path: '%uploads_url%/cities'
+
+            list:
+                sort: ['name', ASC]
+                fields: [{property: 'name', label: 'Ville'}, {property: 'picture', type: 'image', label: "Photo"}]
+                #actions: ['-show']
+            form:
+                fields: ['name', { property: 'picture', label: 'Image', type: 'file_upload', type_options: { upload_dir: '%uploads_directory%', download_path: '%uploads_url%' } }]
+            edit:
+                fields: ['name', {property: 'picture', type: 'file_upload'}]
+
+
+        User:
+            class: App\Entity\User
+            label: 'Utilisateurs'
+
+            list:
+                fields:
+                    - 'firstName'
+                    - 'lastName'
+                    - { property: 'email', label: 'Contact' }
+                    - 'user.project'
+                actions: ['-show']
