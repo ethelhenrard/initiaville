@@ -2,6 +2,10 @@
 
 {% block title %} {{ parent () }} - {{ project.title }}{% endblock %}
 
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
+
 {% block body %}
     <div class="row">
     <div class="col-md-4">
@@ -12,13 +16,13 @@
         <div class="bg-light rounded p-2">
         {% for category in project.categories %}
             <span class="badge badge-pill badge-primary" title="Catégorie">
-                    <i class="fa fa-tag"></i>
-                    {{category.label}}
+                <i class="fa fa-tag"></i>
+                <a style="color: white" href="{{ path('category_show', {"slug": category.slug}) }}">{{ category.label }}</a>
             </span>
         {% endfor %}
             <span class="badge badge-pill badge-secondary" title="Ville">
-                    <i class="fa fa-map-marker"></i>
-                    {{project.city.name}}
+                <i class="fa fa-map-marker"></i>
+                <a style="color: white" href="{{ path('city_show', {"slug": project.city.slug}) }}">{{project.city.name}}</a>
                 </span>
             <span class="badge badge-pill badge-info" title="Date de proposition">
                     <i class="fa fa-calendar"></i>

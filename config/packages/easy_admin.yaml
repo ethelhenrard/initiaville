@@ -24,9 +24,7 @@ easy_admin:
             form:
                 fields:
                     - 'label'
-            edit:
-                fields:
-                    - 'label'
+
 
         Project:
             class: App\Entity\Project
@@ -45,13 +43,13 @@ easy_admin:
             form:
                 fields:
                     - {property: 'user'}
-                    - 'title'
-                    - 'excerpt'
-                    - 'description'
-                    - 'cost'
-                    - 'city'
-                    - 'categories'
-                    - { property: 'picture', label: 'Image', type: 'file_upload', type_options: { upload_dir: 'public/uploads/projects'} }
+                    - {property: 'title', label: 'Titre'}
+                    - {property: 'excerpt', label : 'Description courte'}
+                    - {property: 'description', label: 'Description'}
+                    - {property: 'cost', label: 'Coût'}
+                    - {property: 'city', label: 'Ville'}
+                    - {property: 'categories', label: 'Catégories'}
+                    - { property: 'picturePath', label: 'Image', type: 'file_upload', type_options: { upload_dir: 'public/uploads/projects'} }
 
 
         City:

@@ -1,18 +1,90 @@
 {//todo
     //TODO
+
+
     /X/ Afficher sur la page d'accueil la liste des 3 derniers projets proposés
+
+        > Project/ _card.html.twig include depuis default/index with {variables only} pour éviter conflits
+
     /X/ Afficher dans le menu principal la liste des catégories
+
+        > Creation d'une methode searchFor dans default controller
+        > Render de ce controller pour pouvoir afficher liste des variables sur differentes pages /
+        evite de creer un controller pour chaque vue
+
     /X/ Pouvoir cliquer sur une catégorie pour afficher ensuite la liste des projets d'une catégorie
+
+        > template Default/_search.html.twig (vue du controller searchFor 'renderisé') -> boucle
+
     /X/ Pouvoir cliquer sur le menu "Les Villes" pour afficher la liste des villes
+
+        > Boucle sur les villes > affichage City/show depuis city_index
+        > accessible depuis le menu et depuis la page d'accueil
+
     /X/ Pouvoir cliquer sur une ville pour afficher la liste des projets dans la ville (affichage similaire à la page d'une catégorie)
+
+        > boucle city pour chacunes d'elles afficher city.projects
+        > titre page modifié selon le nombre de projets
+
     /X/ Ajouter un formulaire de création de compte accessible dans le menu principal lorsque l'internaute n'est pas connecté
+
+        > commande
+            php bin/console make:auth
+        > retour homepage apres creation compte
+
     /X/ Ajouter un formulaire de login accessible dans le menu principal lorsque l'internaute n'est pas connecté
+
+        > if {app.user} > apparition du lien pour se logger si pas de user identifié
+
+
     /X/ Afficher sur la page d'accueil un bouton pour proposer un nouveau projet (uniquement visible si l'utilisateur est connecté)
+
+        > if {app.user} vrai alors bouton pour proposer un projet
+        > depuis accueil, activation du lien pour creer un nouveau projet. Securité: si pas user identifié > renvoi vers page login
+        > choix délibéré, j'aurai pu faire disparaitre le bouton avec un if(app.user)
+
     /X/ Créer la page de profil d'un internaute (uniquement visible si l'utilisateur est connecté)
+
+        > if {app.user} + plus n'apparait dans le menu du user que si loggé
+
     /X/ Pouvoir modifier ses informations de profil
+
+        > page mon compte, bouton mettre à jour ses données.
+        > laissé formulaire sur page mon compte, mais un peu choquant
+        > gestion du password à faire
+        > pb avec barre d 'upload, on ne voit pas ce qui est ecrit dedans (bootstrap input/opacity, où?? / Js pour reaparition edition)
+        > enregistrement > modification de la route pour revenir sur compte
+
     /X/ Afficher la liste des projets de l'utilisateur connecté sur sa page de profil
+
+        > boucle sur le user.projects
+        > pb de boutons..creation card??
+        > pb d'affichage
+        > gestion du titre 'projet(s)' ou 'pas de projet)
+
     /X/ Pouvoir modifier / supprimer les projets dans la liste des projets de l'utilisateur (attention à la sécurité sur cette fonctionnalité !)
+
+         > enregistrement > modification de la route pour revenir sur compte de l'utilisateur loggé
+         > ajout de @ISGRANTED dans controller project
+         > + control pour savoir si user = celui qui a créé le projet ou admin dans le ProjetController > edit et delete, sinon redirection vers Homepage
+
+
     /X/ Pouvoir ajouter un nouveau projet dans la base de données
+
+        > bouton vers project_new  depuis le compte de l 'utilisateur ou page d'accueil (seulement si loggé)
+        > upload avec service: fileUploader - specifique pour projet
+        > projet rattaché au user qui le valide
+        > flash message pour si ok et retour vers compte en cas de succès
+
     /X/ L'administrateur du site aura également accès à une interface d'administration très basique lui permettant de gérer facilement la liste des villes et des catégories et de pouvoir supprimer des comptes utilisateurs ou bien des projets}
-    /X/ afficher projet voir+
+
+        > composer require admin
+        > modification du fichier easy_achat.yaml
+        > pb pour recuperer image à l'edition > solution Nico - tenté beaucoup de choses notamment avec service mais pas reussi
+        > pb creation nouveau projet avec recuperation USER; ma solution pas bonne
+
+   /X/ afficher projet voir+
+   /X/ slugs pour city et category
+
+   // gestion des commentaires
 }

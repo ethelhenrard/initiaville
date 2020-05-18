@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProjectController extends AbstractController
 {
-    //todo: faire la page d'index projets + show projet
     /**
      * @Route("/", name="project_index", methods={"GET"})
      */
@@ -44,14 +43,13 @@ class ProjectController extends AbstractController
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form['pictureFile']->getData();
 
-            //todo: attention 2 dossiers selon les images > voir quand creation novuelle ville si creation d'un 2eme service ou if
             if ($pictureFile) {
                 $pictureFilename = $fileUploader->upload($pictureFile);
                 $project->setPicture($pictureFilename);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
-            $project->setUser($this->getUser()); // recupere le user qui a submit le nouveau projet
+            $project->setUser($this->getUser()); // recupere le user qui a submit le nouveau projet (comme dans les fixtures)
             $entityManager->persist($project);
             $entityManager->flush();
 

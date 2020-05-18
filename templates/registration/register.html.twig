@@ -2,8 +2,13 @@
 
 {% block title %}{{ parent() }} - Créer un compte{% endblock %}
 
+
+{% block header %}
+    {% include 'default/_menu.html.twig'  %}
+{% endblock %}
+
 {% block body %}
-    <h1>Enregistrez-vous!</h1>
+    <h1>Créer un compte et de beaux projets!</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.firstname) }}
@@ -16,4 +21,3 @@
 
     {{ form_end(registrationForm) }}
 {% endblock %}
- {#todo contraindre à remplir les champs?? Assert dans user ?#}

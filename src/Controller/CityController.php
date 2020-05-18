@@ -62,7 +62,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="city_show", methods={"GET"})
+     * @Route("/{slug}", name="city_show", methods={"GET"})
      */
     public function show(City $city): Response
     {
@@ -72,7 +72,7 @@ class CityController extends AbstractController
     }
 //request > pour lire la donnée soumise
     /**
-     * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="city_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, City $city, UploaderHelper $uploaderHelper): Response
     {
@@ -121,7 +121,7 @@ class CityController extends AbstractController
     }*/
 
     /**
-     * @Route("/{id}", name="city_delete", methods={"DELETE"})
+     * @Route("/{slug}", name="city_delete", methods={"DELETE"})
      */
     public function delete(Request $request, City $city): Response
     {

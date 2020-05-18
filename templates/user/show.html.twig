@@ -44,7 +44,7 @@
                 Modifier
             </a>
             {#todo - boutons supp et modifier moches, voir pour les intégrer à la card (if?) ou refaire un fichier card pour le user.show?#}
-            {#Ne marche pas parce que Token non vérifié > route vers le show (meme route que le admin?)#}
+            {#Ne marche pas parce que Token non vérifié > route vers le show (meme route que le admin ou position dans le controller?)#}
             {#<a href="{{ path('project_delete', {'id': project.id}) }}" class="btn btn-danger" onsubmit="return confirm('Etes vous sûr de vouloir supprimer ce projet?');">            {#<a href="{{ path('project_delete', {'id': project.id}) }}" class="btn btn-danger" onsubmit="return confirm('Etes vous sûr de vouloir supprimer ce projet?');">#}
               {% include '/project/_delete_form.html.twig' %}
                 {#<i class="fa fa-trash"></i>#}
