@@ -44,15 +44,11 @@ class ProjectController extends AbstractController
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form['pictureFile']->getData();
 
-            //$destination =$this->getParameter('uploads_directory').'/projects/';
-
             //todo: attention 2 dossiers selon les images > voir quand creation novuelle ville si creation d'un 2eme service ou if
             if ($pictureFile) {
                 $pictureFilename = $fileUploader->upload($pictureFile);
                 $project->setPicture($pictureFilename);
             }
-
-            //$pictureFile->move($destination, $pictureFile);
 
             $entityManager = $this->getDoctrine()->getManager();
             $project->setUser($this->getUser()); // recupere le user qui a submit le nouveau projet
@@ -60,7 +56,7 @@ class ProjectController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', "Bravo! Vous avez proposé un nouveau projet!");
-            //TODO redirection vers page compte User apres validation du formulaire
+
             return $this->redirectToRoute('user_show', ["id" => $this->getUser()->getId()]);
         }
 
@@ -84,12 +80,27 @@ class ProjectController extends AbstractController
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function edit(Request $request, Project $project): Response
+    public function edit(Request $request, Project $project, FileUploader $fileUploader): Response
     {
+        //verifier si l'utilisateur connecté est admin ou si c'est bien lui qui a créé le projet
+        if (!$this->isGranted("ROLE_ADMIN") && $this->getUser() !== $project->getUser()) {
+            //throw $this->createAccessDeniedException("Vous n'avez pas l'autorisation de modifier ce projet");
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $pictureFile */
+            $pictureFile = $form['pictureFile']->getData();
+
+            if ($pictureFile) {
+                $pictureFilename = $fileUploader->upload($pictureFile);
+                $project->setPicture($pictureFilename);
+            }
+
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_show', ["id" => $this->getUser()->getId()]);
@@ -107,6 +118,12 @@ class ProjectController extends AbstractController
      */
     public function delete(Request $request, Project $project): Response
     {
+        //verifier si l'utilisateur connecté est admin ou si c'est bien lui qui a créé le projet
+        if (!$this->isGranted("ROLE_ADMIN") && $this->getUser() !== $project->getUser()) {
+            //throw $this->createAccessDeniedException("Vous n'avez pas l'autorisation de modifier ce projet");
+            return $this->redirectToRoute('homepage');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$project->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($project);

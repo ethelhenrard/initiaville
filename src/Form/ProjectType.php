@@ -13,11 +13,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ProjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre',
@@ -31,16 +35,17 @@ class ProjectType extends AbstractType
                 'label' => 'Description',
                 'help' => 'Décrivez votre projet plus en détail'
                 ])
+
             ->add('pictureFile', FileType::class,[
                 'label' => "Télécharger une photo",
-                'mapped' => false
-            ])
-
+                'mapped' => false,
+                'required' => false,
+               // 'constraints' => $imageConstraints
+                ])
             ->add('cost', MoneyType::class, [
                 'label' => 'Coût du projet',
                 'help' => 'Saisissez l\'estimation du coût de votre projet'
             ])
-
 
             ->add('city', EntityType::class,[
                 'label' => 'Ville',

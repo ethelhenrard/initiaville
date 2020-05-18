@@ -31,6 +31,13 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            {# faire apparaitre le nom fichier qd uploadé + enlever opatity dans input/bootstrap ...mais où!!!?
+            $('.custom-file-input').on('change', function(event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+            .find('.custom-file-label')
+            .html(inputFile.files[0].name);
+            });#}
         {% endblock %}
 
     </body>

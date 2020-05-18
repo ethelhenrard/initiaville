@@ -80,6 +80,11 @@ class Project
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picturePath;
+
 
 
     public function __construct()
@@ -261,6 +266,19 @@ class Project
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    public function getPicturePath(): ?string
+    {
+        return $this->picturePath;
+    }
+
+    public function setPicturePath(?string $picturePath): self
+    {
+        $filename = $this->picturePath = $picturePath;
+        $this->setPicture(basename($filename));
+
+        return $this;
     }
 
 

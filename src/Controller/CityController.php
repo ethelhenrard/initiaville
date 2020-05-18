@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\CityType;
 use App\Repository\CityRepository;
+use App\Service\UploaderHelper;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,13 +31,23 @@ class CityController extends AbstractController
     /**
      * @Route("/new", name="city_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UploaderHelper $uploaderHelper): Response
     {
         $city = new City();
         $form = $this->createForm(CityType::class, $city);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['pictureFile']->getData();
+
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->UploadCityPicture($uploadedFile);
+
+                $city->setPicture($newFilename);
+
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($city);
             $entityManager->flush();
@@ -57,16 +70,27 @@ class CityController extends AbstractController
             'city' => $city,
         ]);
     }
-
+//request > pour lire la donnée soumise
     /**
      * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, City $city): Response
+    public function edit(Request $request, City $city, UploaderHelper $uploaderHelper): Response
     {
         $form = $this->createForm(CityType::class, $city);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['pictureFile']->getData();
+
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->UploadCityPicture($uploadedFile);
+
+                $city->setPicture($newFilename);
+
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('city_index');
@@ -77,6 +101,24 @@ class CityController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/upload/test", name="upload_test")
+     */
+    /*public function temporaryUploadAction(Request $request){
+        //dd($request->files->get('image'));
+        /** @var UploadedFile $uploadedFile
+        $uploadedFile = $request->files->get('image');
+
+        $destination = $this->getParameter('kernel.project_dir').'/public/uploads/cities';
+
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+        dd($uploadedFile->move($destination,
+         $newFilename)
+    );
+    }*/
 
     /**
      * @Route("/{id}", name="city_delete", methods={"DELETE"})

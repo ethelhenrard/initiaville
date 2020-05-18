@@ -24,10 +24,13 @@ class FileUploader
         //on rajoute un identifiant unique + extension
         $fileName = $originalFilename.'-'.uniqid().'.'.$file->guessExtension();
 
+        //possible de modifier le target directory de service.yaml directement (upload directory)
+        $destination = $this->targetDirectory . "/projects";
+
         try {
             //on essaie de mettre dans le fichier upload > try/catch$
             //on le deplace vers target Directory
-            $file->move($this->getTargetDirectory(), $fileName);
+            $file->move($destination, $fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
         }
