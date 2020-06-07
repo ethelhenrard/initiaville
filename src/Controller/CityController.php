@@ -7,6 +7,7 @@ use App\Form\CityType;
 use App\Repository\CityRepository;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class CityController extends AbstractController
 
     /**
      * @Route("/new", name="city_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request, UploaderHelper $uploaderHelper): Response
     {
@@ -73,6 +75,7 @@ class CityController extends AbstractController
 //request > pour lire la donnée soumise
     /**
      * @Route("/{slug}/edit", name="city_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, City $city, UploaderHelper $uploaderHelper): Response
     {
@@ -122,6 +125,7 @@ class CityController extends AbstractController
 
     /**
      * @Route("/{slug}", name="city_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, City $city): Response
     {

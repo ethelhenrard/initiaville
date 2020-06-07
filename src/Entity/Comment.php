@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
@@ -7,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -26,8 +26,6 @@ class Comment
      * @ORM\Column(type="text")
      */
     private $content;
-
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")
@@ -112,4 +110,46 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist() {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    public function getCreatedAtFormat ()
+    {
+        return $this->formatTime($this->getCreatedAt());
+    }
+
+    private function formatTime(\DateTimeInterface $time): string
+    {
+        $date1 = new \DateTime("now");
+        $date2 = $this->getCreatedAt();
+        $interval = $date2->diff($date1);
+        $days = $interval->format('%R%a');
+        $hours = $interval->format("%h");
+        $minutes = $interval->format("%i");
+        $secondes = $interval->format("%s");
+        $formattedTime = "";
+
+        if ($days > 0)
+            $formattedTime = "$days jour" . (($days > 1) ? "s" : "");
+
+        elseif ($hours > 0) {
+            $formattedTime = "$hours heure" . (($hours > 1) ? "s" : "");
+        }
+
+        elseif ($minutes > 0) {
+            $formattedTime = "$minutes minute" . (($minutes > 1) ? "s" : "");
+        }
+
+        elseif ($secondes > 0) {
+            $formattedTime = "$secondes seconde" . (($secondes>1)? "s" : "");
+        }
+
+        return $interval->format($formattedTime);
+    }
+
 }

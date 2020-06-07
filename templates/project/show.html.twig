@@ -39,27 +39,26 @@
 
     <hr>
 
-    <form class="bg-light rounded p-2">
+    <form class="bg-light rounded p-2" method="post">
         <h2>Ajouter un commentaire</h2>
-        <div class="form-group">
-            <label for="input-title">Titre</label>
-            <input type="text" class="form-control" id="input-title" placeholder="Titre">
-        </div>
-        <div class="form-group">
-            <label for="texatrea-comment">Contenu</label>
-            <textarea class="form-control" id="texatrea-comment" placeholder="Contenu de votre message"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {% if app.user %}
+            {% include 'comment/_form.html.twig' %}
+        {% else %}
+            <p><a href="{{ path('app_login') }}">Identifiez-vous</a> ou <a href="{{ path('app_register') }}">inscrivez-vous</a> pour ajouter un commentaire</p>
+        {% endif %}
     </form>
 
     <section class="list-group mt-4">
-        <article class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">C'est une super idée !</h5>
-                <small>Il y a 2 heures</small>
-            </div>
-            <p class="mb-1"></p>
-            <small>J'aimerai vraiment pouvoir participer avec vous à ce projet.</small>
-        </article>
+        {% for comment in project.comments %}
+            <article class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ comment.title}}</h5>
+                    <small>Ecrit par {{ comment.user }}, il y a {{ comment.createdAtFormat }} </small>
+                </div>
+                <p class="mb-1"></p>
+                <small>{{ comment.content}}</small>
+            </article>
+        {% endfor %}
+
     </section>
 {% endblock %}
